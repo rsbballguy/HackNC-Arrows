@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html><head>
+	<title>
+		Arrow
+	</title>
+	<style type="text/css">
+	   	@font-face {
+    		font-family: 'PixelFont';
+    		src: url('text.ttf');
+		}
+    </style>
+	</head>
+	<link type="text/css" rel="stylesheet" href="orange.css"/>
+	<div id='key' style="visibility:hidden"></div>
+
+	<div id='scoreboard' style="position: absolute; left: 50%;">
+        <div id='score' style="position: relative; left: -50%; font-family: PixelFont; font-size: 40px">
+        	score
+        </div>
+    </div>
+
+	<!--body id='body' onload="pageLoaded()" style="background-image:url(something.jpg)"-->
+	<body id='body' onload="pageLoaded()">
+		<style type="text/css">
+			body {
+			    overflow:hidden;
+			    background-color: rgb(150, 255, 150);
+			}
+		</style>
+		<script type="text/javascript">
+			
+			function pageLoaded() {
+				document.getElementById('body').focus();
+				tick();
+			}
+
+			window.addEventListener("keydown", keyEvent, false);
+
+			function keyEvent(event)
+			{
+				if(window.innerHeight <= 600)event.preventDefault();
+				var element = document.getElementById('key');
+				var text = document.createTextNode("" + event.keyCode + "");
+				element.textContent = text.textContent;
+			}
+
+			function moveElement(element, x, y, rotate)
+			{
+				element.style.left = x + "px";
+				element.style.top = y + "px";
+				element.style.WebkitTransform = "rotate("+rotate+"deg)";
+			}
+
+			var mouse = {x: 0, y: 0};
+
+			document.addEventListener('mousemove', function(e){ 
+			  	mouse.x = e.clientX || e.pageX; 
+			    mouse.y = e.clientY || e.pageY 
+			}, false);
+
+			function newImage(id, url, x, y)
+			{
+                img = document.createElement('img');
+            	img.src = url;
+            	img.style.position = "absolute";
+            	img.style.left = x + "px";
+            	img.style.top = y + "px";
+            	img.id = id;
+            	document.body.appendChild(img);
+        	}
+
+        	var numArrows = 10;
+
+        	for(var k = 0; k < numArrows; k++)
+        	{
+        		var inT = Math.floor(Math.random()*4);
+        		newImage("arrow"+k, "black"+inT+".png", window.innerWidth/2 - 50, -100);
+        	}
+
+        	var bar = 0;
+        	var score = 0;
+
+        	newImage("bar", "bar.png", window.innerWidth/2-50, window.innerHeight-130);
+
+        	starList = [];
+
+        	function spawnStar()
+        	{
+        		var star = {id: Math.ceil(Math.random()*1000000) + "", dir: 0, x: window.innerWidth/2, y: window.innerHeight/2, r: 0, g: 0, b: 0};
+        		star.dir = Math.floor(Math.random()*360);
+        		starList.push(star);
+        		var div = document.createElement('div');
+        		div.textContent = "......";
+        		div.style.transform = "rotate("+star.dir+"deg)"
+        		div.id = star.id;
+        		div.style.position = "absolute";
+        		div.style.left = star.x+"px";
+        		div.style.top = star.y+"px";
+        		div.style.color = "black";
+        		document.body.appendChild(div);
+        	}
+
+			function tick()
+			{
+				if(score > 0 && bar == 0 && numArrows > 0)
+        		{
+        			document.getElementById('key').textContent = "";
+
+        			var arrow0 = document.getElementById("arrow0");
+        			arrow0.parentNode.removeChild(arrow0);
+
+        			for(var i = 1; i < numArrows; i++)
+        			{
+        				document.getElementById("arrow"+i).id = "arrow"+(i-1);
+        			}
+
+        			numArrows -= 1;
+        		}
+        		else if(numArrows > 0)
+        		{
+        			spawnStar();
+        		}
+
+        		if(numArrows == 0)
+        		{
+		        	var fc = document.createElement("div");
+		        	fc.style.position = "absolute";
+		        	fc.style.left = "50%";
+		        	fc.style.top = "40%";
+		        	var finals = document.createElement('div');
+		        	finals.style.position = "relative";
+		        	finals.style.left = "-50%";
+		        	finals.style.fontFamily = "PixelFont";
+		        	finals.style.fontSize = "200px";
+		        	finals.textContent = score;
+
+		        	fc.appendChild(finals);
+        			document.body.appendChild(fc);
+
+        			var board = document.getElementById("score");
+        			board.parentNode.removeChild(board);
+        			var pbar = document.getElementById("canvas");
+        			pbar.parentNode.removeChild(pbar);
+        			var ibar = document.getElementById('bar');
+        			ibar.parentNode.removeChild(ibar);
+
+        			numArrows -= 1;
+
+        			//||||||||||||||||///////////////////////////////////
+        			// GAME ENDS HERE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        			//||||||||||||||||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        		}
+
+				var removeList = [];
+				
+				for(var k = 0; k < starList.length; k++)
+				{
+					var hypot = Math.sqrt(Math.pow(starList[k].x-window.innerWidth/2, 2) + Math.pow(starList[k].y-window.innerHeight/2, 2));
+					hypot += 2;
+					hypot *= 1.05;
+					starList[k].x = Math.ceil(hypot * Math.cos(toRadians(starList[k].dir))) + window.innerWidth/2;
+					starList[k].y = Math.ceil(hypot * Math.sin(toRadians(starList[k].dir))) + window.innerHeight/2;
+					document.getElementById(starList[k].id).style.left = starList[k].x +"px";
+					document.getElementById(starList[k].id).style.top = starList[k].y +"px";
+					document.getElementById(starList[k].id).style.fontSize = Math.ceil(hypot/10) +"px";
+					if(Math.abs(starList[k].x-window.innerWidth/2) > window.innerWidth*2 || Math.abs(starList[k].y-window.innerHeight/2) > window.innerHeight*2)
+					{
+						removeList.push(k);
+					}
+				}
+				for(var k = removeList.length-1; k >= 0; k--)
+				{
+					var div = document.getElementById(starList[k].id);
+					div.parentNode.removeChild(div);
+					starList.splice(k, 1);
+				}
+
+				//moveElement(document.getElementById('key'), mouse.x, mouse.y);
+				//moveElement(document.getElementById('arrow'), window.innerWidth/2 - 50, w);
+
+				document.getElementById('canvas').style.top = (window.innerHeight-100) + "px";
+				document.getElementById('canvas').style.left = (window.innerWidth/2-50) + "px";
+				document.getElementById('bar').style.top = (window.innerHeight-130) + "px";
+				document.getElementById('bar').style.left = (window.innerWidth/2-50) + "px";
+				document.getElementById('scoreboard').style.top = (window.innerHeight-60) + "px";
+				document.getElementById('scoreboard').style.left = "50%";
+
+				for(var i = 0; i < numArrows; i++)
+        		{
+	        		var str = document.getElementById("arrow"+i).style.top;
+					var inT = parseInt((str).substring(0, str.length-2));
+					var image = document.getElementById("arrow"+i);
+					image.style.top = (inT += ((window.innerHeight-200 - i*125) - inT)*0.1) + "px";
+					image.style.left = (window.innerWidth/2-50) + "px";
+					//	image.style.WebkitTransform = "rotate("+((30-numArrows))+"deg)"; // Arrow rotate!
+        		}
+
+        		var keyinT = parseInt(document.getElementById('key').textContent);
+        		if(numArrows > 0)imgsrc = document.getElementById("arrow0").src;
+
+        		if(numArrows > 0 && keyinT-37 == parseInt(imgsrc.charAt(imgsrc.length-5)))
+        		{
+        			document.getElementById('key').textContent = "";
+
+        			var arrow0 = document.getElementById("arrow0");
+        			arrow0.parentNode.removeChild(arrow0);
+
+        			//document.getElementById("arrow0").id = "temporaryID";
+
+        			for(var i = 1; i < numArrows; i++)
+        			{
+        				document.getElementById("arrow"+i).id = "arrow"+(i-1);
+        			}
+
+        			var inT = Math.floor(Math.random()*4);
+        			newImage("arrow"+(numArrows-1), "black"+inT+".png", window.innerWidth/2 - 50, -100);
+
+        			bar = 94.0;
+
+        			score += 1;
+
+        			document.getElementById('score').textContent = score;
+
+        			//document.getElementById("temporaryID").id = "arrow"+(numArrows-1);
+
+        			//document.getElementById("arrow"+(numArrows-1)).src = "black"+Math.floor(Math.random()*4)+".png";
+        		}
+        		else if(numArrows > 0 && keyinT-37 == 0 || keyinT-37 == 1 || keyinT-37 == 2 || keyinT-37 == 3)
+        		{
+        			bar = bar/2;
+        			document.getElementById('key').textContent = "";
+        		}
+
+        		var g = document.getElementById("canvas").getContext("2d");
+        		g.clearRect (0, 0, 200, 100);
+        		g.lineWidth = 10;
+        		g.beginPath();
+        		if(bar/94.0 >= 0.66)
+        			g.strokeStyle = "rgb("+Math.ceil(255 - 255*bar/94.0)+", "+Math.ceil(255)+", "+(0)+")";
+        		else if(bar/94.0 >= 0.33)
+        			g.strokeStyle = "rgb("+Math.ceil(255 - 255*bar/110.0)+", "+Math.ceil(255)+", "+(0)+")";
+        		else
+        			g.strokeStyle = "rgb("+Math.ceil(255 - 255*bar/150.0)+", "+Math.ceil(3*255*bar/94.0)+", "+(0)+")";
+        		g.beginPath();
+        		g.moveTo(3, 20);
+        		g.lineTo(3+bar, 20);
+        		g.stroke();
+
+        		if(bar > 0)bar -= score/75;
+        		if(bar < 0)bar = 0;
+			}
+
+			setInterval("tick()", 10);
+
+			function toDegrees (angle) {
+  				return angle * (180 / Math.PI);
+			}
+			function toRadians (angle) {
+  				return angle * (Math.PI / 180);
+			}
+
+		</script>
+
+	<canvas height="100" width="200" style="position: absolute; left: 0px; top: 0px; width: 200; height: 100;" id="canvas"></canvas>
+	
+</body></html>
