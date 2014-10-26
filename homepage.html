@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+	<script>
+		function newImage(id, url, x, y) //do not use document.getElementById
+		{
+			img = document.createElement('img');
+			img.src = url;
+			img.style.postition = "absolute";
+			img.style.left = x + 'px';
+			img.style.top = y + "px";
+			img.id = id;
+			document.body.appendChild(img);
+		}
+		function moveElement(element, x, y, rotate) //USE document.getElementById
+		{
+			element.style.left = x+"px"
+			element.style.top = y+"px"
+			elemnt.style.WebkitTransform = "rotate("+rotate+"deg)";
+		}
+
+	</script>
+	<form name="myform" action="" method="POST">
+	<div align="center">
+	<br><br>
+	Username: <input id = "hello" size = "7" type="text" value = "Optional">
+	<br><input type="submit" value="Submit"><br>
+	</div>
+	</form>
+	<script>
+		var a = document.getElementById("hello").textValue;
+	</script>
+
+	<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+	<body>
+			<h1> Arrow </h1>
+			<button onClick = "parent.location='single.html'"; class = "pos_top">Solo</button>
+			<button onClick = "parent.location='multi.html'"; class = "pos_mid"
+>Versus</button>
+			<button onclick="myFunction()"; class = "pos_bot">Instructions</font></button>
+			
+			<script>
+					/*function myFunction() {
+					    var myWindow = window.open("", "Instructions", "width=300, height=500, color=#20B2AA, titlebar=0");
+					    myWindow.document.write("<title>Instructions</title><h1><center>Instructions</center></h1><p>There are Three Stages:<p><p>First Stage:</p><ul><li>Press the Keys in the Direction the arrow key is pointing</li><li>You have 30 seconds to get as far as possible</li></ul><p>Second Stage</p><ul><li>Same direction for solid arrows</li><li>Opposite direction for dotted arrows</li><li>You have 30 seconds to get as far as possible</li></ul><p>Third Stage</p><ul><li>Press the Keys based on the color of the arrows</li><li>DISREGARD THE ARROW DIRECTION</li></ul>");
+						}*/
+
+				function myFunction() {
+    var myWindow = window.open("", "Instructions", "width=300, height=400, color=#20B2AA, titlebar=0");
+    myWindow.document.write("<link type='text/css' rel='stylesheet' href='instr.css'/><title>Instructions</title><h1><center>Instructions</center></h1><p><strong>There are Three Difficulties:</strong></p><ul><li>Solo (Single Player)<ul><li><For 'Solo' mode, press the corresponding arrow key to the bottom-most one on the screen.</li><li>The health bar will decrease the longer you spend on one arrow key.</li></ul></li><li>Versus (Multiplayer)<ul><li>For the 'Versus' mode, the person on the left uses wsad, the middle one uses ikjl, and the right one uses the arrow keys.</li> <li>The first person who gets to 100 wins.</li><li>A point will be deducted for every wrong press.</li></ul></li></ul>  </p>");}
+  				function Scores()
+				{
+					var myWindow = window.open("", "High Scores", "width = 100, height = 300, color=#20B2AA, titlebar = 0");
+					myWindow.document.write("<title>High Scores</title><h1><center>High Scores</center></h1>");
+				}
+		    </script>
+	</body>
+	<script language='JavaScript' type='text/JavaScript'>
+var degrees = 270;
+function move_img(str) {
+
+var x=document.getElementById('i1').offsetTop;
+x= x +100;
+document.getElementById('i1').style.top= x + "px";
+
+}
+
+function rotateAnimation(el,speed){
+	var elem = document.getElementById(el);
+	if(navigator.userAgent.match("Chrome")){
+		elem.style.WebkitTransform = "rotate("+degrees+"deg)";
+	} 
+	next1();
+}
+function next1()
+{
+var step=4; 
+var y=document.getElementById('i1').offsetTop;
+var x=document.getElementById('i1').offsetLeft;
+
+if(y <= 800  )
+{
+	if(y==800)
+	{
+			rotateAnimation("i1",90);
+			
+
+	}
+	y= y +step;
+	document.getElementById('i1').style.top= y + "px"; // vertical movment
+}
+	
+else{
+	
+	if(x >= 50){
+		if(x==800)
+		{
+			rotateAnimation("i1",90);
+		}
+		x= x -step;
+		document.getElementById('i1').style.left= x + "px"; // horizontal movment
+		}
+	}
+
+
+
+}
+
+a = Math.floor(Math.random() * 100);
+b =Math.floor(Math.random() * 100);
+c =Math.floor(Math.random() * 100);
+d = Math.floor(Math.random() * 100);
+e =Math.floor(Math.random() * 100);
+f =Math.floor(Math.random() * 100);
+g =Math.floor(Math.random() * 100);
+h =Math.floor(Math.random() * 100);
+i =Math.floor(Math.random() * 100);
+j =Math.floor(Math.random() * 100);
+k =Math.floor(Math.random() * 100);
+l =Math.floor(Math.random() * 100);
+m =Math.floor(Math.random() * 100);
+n =Math.floor(Math.random() * 100);
+o =Math.floor(Math.random() * 100);
+p =Math.floor(Math.random() * 100);
+q =Math.floor(Math.random() * 100);
+r =Math.floor(Math.random() * 100);
+s =Math.floor(Math.random() * 100);
+t =Math.floor(Math.random() * 100);
+
+iteration = 0;
+function disp(time){
+
+	var xchange = Math.floor((window.innerWidth/2) * Math.cos(time/100.0))-a;
+	var ychange = Math.floor((window.innerHeight/2) * Math.sin(time/100.0))-a;
+
+	document.getElementById('i1').style.WebkitTransform = "rotate("+(Math.atan2(ychange, xchange))+"rad)";
+
+	document.getElementById('i1').style.left = (xchange + (window.innerWidth/2)) + "px";
+	document.getElementById('i1').style.top = (ychange + (window.innerHeight/2)) + "px";
+	
+	var xchange1 = Math.floor((window.innerWidth/2) * Math.sin(time/100.0))-b;
+	var ychange1 = Math.floor((window.innerHeight/2) * Math.cos(time/100.0))-b;
+
+	document.getElementById('i2').style.WebkitTransform = "rotate("+(Math.atan2(ychange1, xchange1))+"rad)";
+
+	document.getElementById('i2').style.left = (xchange1 + (window.innerWidth/2)) + "px";
+	document.getElementById('i2').style.top = (ychange1 + (window.innerHeight/2)) + "px";
+
+	var xchange2 = Math.floor((window.innerWidth/2) * Math.sin(time/120.0))-c;
+	var ychange2 = Math.floor((window.innerHeight/2) * Math.cos(time/120.0))-c;
+
+	document.getElementById('i3').style.WebkitTransform = "rotate("+(Math.atan2(ychange2, xchange2))+"rad)";
+
+	document.getElementById('i3').style.left = (xchange2 + (window.innerWidth/2)) + "px";
+	document.getElementById('i3').style.top = (ychange2 + (window.innerHeight/2)) + "px";
+
+	var xchange3 = Math.floor((window.innerWidth/2) * Math.cos(time/120.0))-d;
+	var ychange3 = Math.floor((window.innerHeight/2) * Math.sin(time/120.0))-d;
+
+	document.getElementById('i4').style.WebkitTransform = "rotate("+(Math.atan2(ychange3, xchange3))+"rad)";
+
+	document.getElementById('i4').style.left = (xchange3 + (window.innerWidth/2)) + "px";
+	document.getElementById('i4').style.top = (ychange3 + (window.innerHeight/2)) + "px";
+
+	var xchange4 = Math.floor((window.innerWidth/2) * Math.sin(time/140.0))-e;
+	var ychange4 = Math.floor((window.innerHeight/2) * Math.cos(time/140.0))-e;
+
+	document.getElementById('i5').style.WebkitTransform = "rotate("+(Math.atan2(ychange4, xchange4))+"rad)";
+
+	document.getElementById('i5').style.left = (xchange4 + (window.innerWidth/2)) + "px";
+	document.getElementById('i5').style.top = (ychange4 + (window.innerHeight/2)) + "px";
+
+	var xchange5 = Math.floor((window.innerWidth/2) * Math.cos(time/140.0))-f;
+	var ychange5 = Math.floor((window.innerHeight/2) * Math.sin(time/140.0))-f;
+
+	document.getElementById('i6').style.WebkitTransform = "rotate("+(Math.atan2(ychange5, xchange5))+"rad)";
+
+	document.getElementById('i6').style.left = (xchange5 + (window.innerWidth/2)) + "px";
+	document.getElementById('i6').style.top = (ychange5 + (window.innerHeight/2)) + "px";
+
+	var xchange6 = Math.floor((window.innerWidth/2) * Math.sin(time/160.0))-g;
+	var ychange6 = Math.floor((window.innerHeight/2) * Math.cos(time/160.0))-g;
+
+	document.getElementById('i7').style.WebkitTransform = "rotate("+(Math.atan2(ychange6, xchange6))+"rad)";
+
+	document.getElementById('i7').style.left = (xchange6 + (window.innerWidth/2)) + "px";
+	document.getElementById('i7').style.top = (ychange6 + (window.innerHeight/2)) + "px";
+
+	var xchange7 = Math.floor((window.innerWidth/2) * Math.cos(time/160.0))-h;
+	var ychange7 = Math.floor((window.innerHeight/2) * Math.sin(time/160.0))-h;
+
+	document.getElementById('i8').style.WebkitTransform = "rotate("+(Math.atan2(ychange7, xchange7))+"rad)";
+
+	document.getElementById('i8').style.left = (xchange7 + (window.innerWidth/2)) + "px";
+	document.getElementById('i8').style.top = (ychange7 + (window.innerHeight/2)) + "px";
+
+	var xchange8 = Math.floor((window.innerWidth/2) * Math.sin(time/180.0))-i;
+	var ychange8 = Math.floor((window.innerHeight/2) * Math.cos(time/180.0))-i;
+
+	document.getElementById('i9').style.WebkitTransform = "rotate("+(Math.atan2(ychange8, xchange8))+"rad)";
+
+	document.getElementById('i9').style.left = (xchange8 + (window.innerWidth/2)) + "px";
+	document.getElementById('i9').style.top = (ychange8 + (window.innerHeight/2)) + "px";
+
+	var xchange9 = Math.floor((window.innerWidth/2) * Math.cos(time/180.0))-j;
+	var ychange9 = Math.floor((window.innerHeight/2) * Math.sin(time/180.0))-j;
+
+	document.getElementById('i10').style.WebkitTransform = "rotate("+(Math.atan2(ychange9, xchange9))+"rad)";
+
+	document.getElementById('i10').style.left = (xchange9 + (window.innerWidth/2)) + "px";
+	document.getElementById('i10').style.top = (ychange9 + (window.innerHeight/2)) + "px";
+
+	var xchange10 = Math.floor((window.innerWidth/2) * Math.sin(time/200.0))-k;
+	var ychange10 = Math.floor((window.innerHeight/2) * Math.cos(time/200.0))-k;
+
+	document.getElementById('i11').style.WebkitTransform = "rotate("+(Math.atan2(ychange10, xchange10))+"rad)";
+
+	document.getElementById('i11').style.left = (xchange10 + (window.innerWidth/2)) + "px";
+	document.getElementById('i11').style.top = (ychange10 + (window.innerHeight/2)) + "px";
+
+	var xchange11 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-l;
+	var ychange11 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-l;
+
+	document.getElementById('i12').style.WebkitTransform = "rotate("+(Math.atan2(ychange11, xchange11))+"rad)";
+
+	document.getElementById('i12').style.left = (xchange11 + (window.innerWidth/2)) + "px";
+	document.getElementById('i12').style.top = (ychange11 + (window.innerHeight/2)) + "px";
+
+	var xchange12 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-m;
+	var ychange12 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-m;
+
+	/*document.getElementById('i13').style.WebkitTransform = "rotate("+(Math.atan2(ychange12, xchange12))+"rad)";
+
+	document.getElementById('i13').style.left = (xchange12 + (window.innerWidth/2)) + "px";
+	document.getElementById('i13').style.top = (ychange12 + (window.innerHeight/2)) + "px";
+
+	var xchange13 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-n;
+	var ychange13 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-n;
+
+	document.getElementById('i14').style.WebkitTransform = "rotate("+(Math.atan2(ychange13, xchange13))+"rad)";
+
+	document.getElementById('i14').style.left = (xchange13 + (window.innerWidth/2)) + "px";
+	document.getElementById('i14').style.top = (ychange13 + (window.innerHeight/2)) + "px";
+
+	var xchange14 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-o;
+	var ychange14 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-o;
+
+	document.getElementById('i15').style.WebkitTransform = "rotate("+(Math.atan2(ychange14, xchange14))+"rad)";
+
+	document.getElementById('i15').style.left = (xchange14 + (window.innerWidth/2)) + "px";
+	document.getElementById('i15').style.top = (ychange14 + (window.innerHeight/2)) + "px";
+
+	var xchange15 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-p;
+	var ychange15 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-p;
+
+	document.getElementById('i16').style.WebkitTransform = "rotate("+(Math.atan2(ychange15, xchange15))+"rad)";
+
+	document.getElementById('i16').style.left = (xchange15 + (window.innerWidth/2)) + "px";
+	document.getElementById('i16').style.top = (ychange15 + (window.innerHeight/2)) + "px";
+
+	var xchange16 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-q;
+	var ychange16 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-q;
+
+	document.getElementById('i17').style.WebkitTransform = "rotate("+(Math.atan2(ychange16, xchange16))+"rad)";
+
+	document.getElementById('i17').style.left = (xchange16 + (window.innerWidth/2)) + "px";
+	document.getElementById('i17').style.top = (ychange16 + (window.innerHeight/2)) + "px";
+
+	var xchange17 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-r;
+	var ychange17 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-r;
+
+	document.getElementById('i18').style.WebkitTransform = "rotate("+(Math.atan2(ychange17, xchange17))+"rad)";
+
+	document.getElementById('i18').style.left = (xchange17 + (window.innerWidth/2)) + "px";
+	document.getElementById('i18').style.top = (ychange17 + (window.innerHeight/2)) + "px";
+
+	var xchange18 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-s;
+	var ychange18 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-s;
+
+	document.getElementById('i19').style.WebkitTransform = "rotate("+(Math.atan2(ychange18, xchange18))+"rad)";
+
+	document.getElementById('i19').style.left = (xchange18 + (window.innerWidth/2)) + "px";
+	document.getElementById('i19').style.top = (ychange18 + (window.innerHeight/2)) + "px";
+
+	var xchange19 = Math.floor((window.innerWidth/2) * Math.cos(time/200.0))-t;
+	var ychange19 = Math.floor((window.innerHeight/2) * Math.sin(time/200.0))-t;
+
+	document.getElementById('i20').style.WebkitTransform = "rotate("+(Math.atan2(ychange19, xchange19))+"rad)";
+
+	document.getElementById('i20').style.left = (xchange19 + (window.innerWidth/2)) + "px";
+	document.getElementById('i20').style.top = (ychange19 + (window.innerHeight/2)) + "px";*/
+	iteration += 1;
+}
+
+function timer(){
+disp(iteration);
+my_time=setTimeout('timer()',1);
+}
+
+
+//-->
+</script>
+<style type="text/css">
+down{
+
+}	
+</style>
+
+</head>
+<body onload="timer()" >
+<style type="text/css">
+body {
+	overflow: hidden;
+}
+</style>
+<div id="div2">
+	<img src=left.png id='i1' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i2' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i3' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i4' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i5' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i6' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i7' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i8' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i9' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i10' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i11' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i12' style="position:absolute; right: 50; top: 50;">
+	<!--<img src=left.png id='i13' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i14' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i15' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i16' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i17' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i18' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i19' style="position:absolute; right: 50; top: 50;">
+	<img src=left.png id='i20' style="position:absolute; right: 50; top: 50;">-->
+</div>
+
+
+
+
+</body>
+</html>
