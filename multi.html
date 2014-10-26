@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html><head>
+	<title>
+		Arrow
+	</title>
+	<style type="text/css">
+	   	@font-face {
+    		font-family: 'PixelFont';
+    		src: url('text.ttf');
+		}
+    </style>
+	</head>
+
+	<!--body id='body' onload="pageLoaded()" style="background-image:url(something.jpg)"-->
+	<body id='body' onload="pageLoaded()" style="min-height:600px">
+		<style type="text/css">
+			body {
+			    overflow:hidden;
+			    background-color: rgb(150, 255, 150);
+			}
+		</style>
+		<script type="text/javascript">
+			
+			function pageLoaded() {
+				document.getElementById('body').focus();
+				tick();
+			}
+
+			var map = [];
+			onkeydown = onkeyup = function(e) {
+    			e = e || event;
+    			map[e.keyCode] = e.type == 'keydown';
+    			/*insert conditional here*/
+			}
+
+			function translate(element, x, y, rotate)
+			{
+				element.style.left = x + "px";
+				element.style.top = y + "px";
+				element.style.WebkitTransform = "rotate("+rotate+"deg)";
+			}
+
+			function newImage(id, url, x, y)
+			{
+                img = document.createElement('img');
+            	img.src = url;
+            	img.style.position = "absolute";
+            	img.style.left = x + "px";
+            	img.style.top = y + "px";
+            	img.id = id;
+            	document.body.appendChild(img);
+        	}
+
+        	function newDiv(id, x, y)
+			{
+                img = document.createElement('div');
+            	img.style.position = "absolute";
+            	img.style.left = x + "px";
+            	img.style.top = y + "px";
+            	img.id = id;
+            	document.body.appendChild(img);
+        	}
+
+        	var players = 3;
+        	var info = {score1:0, dir1:0, score2:0, dir2:0, score3:0, dir3:0};
+
+        	for(var k = 1; k <= players; k++)
+        	{
+        		var inT = Math.floor(Math.random()*4);
+        		if(k == 1)
+        			info.dir1 = inT*90;
+        		else if(k == 2)
+        			info.dir2 = inT*90;
+        		else
+        			info.dir3 = inT*90;
+        		newImage("arrow"+k, "black"+inT+".png", (k)*window.innerWidth/4 - 50, 300);
+        		newDiv("score"+k, (k)*window.innerWidth/4 - 30, 450);
+        	}
+
+        	starList = [];
+
+        	function spawnStar()
+        	{
+        		var star = {id: Math.ceil(Math.random()*1000000) + "", dir: 0, x: window.innerWidth/2, y: window.innerHeight/2, r: 0, g: 0, b: 0};
+        		star.dir = Math.floor(Math.random()*360);
+        		starList.push(star);
+        		var div = document.createElement('div');
+        		div.textContent = "......";
+        		div.style.transform = "rotate("+star.dir+"deg)"
+        		div.id = star.id;
+        		div.style.position = "absolute";
+        		div.style.left = star.x+"px";
+        		div.style.top = star.y+"px";
+        		div.style.color = "black";
+        		document.body.appendChild(div);
+        	}
+
+			function tick()
+			{
+				var removeList = [];
+				spawnStar();
+				for(var k = 0; k < starList.length; k++)
+				{
+					var hypot = Math.sqrt(Math.pow(starList[k].x-window.innerWidth/2, 2) + Math.pow(starList[k].y-window.innerHeight/2, 2));
+					hypot += 2;
+					hypot *= 1.05;
+					starList[k].x = Math.ceil(hypot * Math.cos(toRadians(starList[k].dir))) + window.innerWidth/2;
+					starList[k].y = Math.ceil(hypot * Math.sin(toRadians(starList[k].dir))) + window.innerHeight/2;
+					document.getElementById(starList[k].id).style.left = starList[k].x +"px";
+					document.getElementById(starList[k].id).style.top = starList[k].y +"px";
+					document.getElementById(starList[k].id).style.fontSize = Math.ceil(hypot/10) +"px";
+					if(Math.abs(starList[k].x-window.innerWidth/2) > window.innerWidth*2 || Math.abs(starList[k].y-window.innerHeight/2) > window.innerHeight*2)
+					{
+						removeList.push(k);
+					}
+				}
+				for(var k = removeList.length-1; k >= 0; k--)
+				{
+					var div = document.getElementById(starList[k].id);
+					div.parentNode.removeChild(div);
+					starList.splice(k, 1);
+				}
+
+				document.getElementById("score1").textContent = "score: " + info.score1;
+				document.getElementById("score2").textContent = "score: " + info.score2;
+				document.getElementById("score3").textContent = "score: " + info.score3;
+
+				document.getElementById('score1').style.fontFamily = "PixelFont";
+				document.getElementById('score2').style.fontFamily = "PixelFont";
+
+				document.getElementById('score3').style.fontFamily = "PixelFont";
+
+
+				// Player 1 key input
+				if(map[87]) //W
+				{
+					if(info.dir1 == 90)
+					{
+						info.score1 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow1");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+1, "black"+inT+".png", (1)*window.innerWidth/4 - 50, 300);
+        				info.dir1 = inT*90;
+					}
+					else
+						info.score1 -= 1;
+					map[87] = false;
+				}
+				else if(map[65]) //A
+				{
+					if(info.dir1 == 0)
+					{
+						info.score1 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow1");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+1, "black"+inT+".png", (1)*window.innerWidth/4 - 50, 300);
+        				info.dir1 = inT*90;
+					}
+					else
+						info.score1 -= 1;
+					map[65] = false;
+				}
+				else if(map[83]) //S
+				{
+					if(info.dir1 == 270)
+					{
+						info.score1 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow1");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+1, "black"+inT+".png", (1)*window.innerWidth/4 - 50, 300);
+        				info.dir1 = inT*90;
+					}
+					else
+						info.score1 -= 1;
+					map[83] = false;
+				}
+				else if(map[68]) //D
+				{
+					if(info.dir1 == 180)
+					{
+						info.score1 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow1");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+1, "black"+inT+".png", (1)*window.innerWidth/4 - 50, 300);
+        				info.dir1 = inT*90;
+					}
+					else
+						info.score1 -= 1;
+					map[68] = false;
+				}
+
+				// Player 2 key input
+				if(map[73]) //I
+				{
+					if(info.dir2 == 90)
+					{
+						info.score2 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow2");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+2, "black"+inT+".png", (2)*window.innerWidth/4 - 50, 300);
+        				info.dir2 = inT*90;
+					}
+					else
+						info.score2 -= 1;
+					map[73] = false;
+				}
+				else if(map[74]) //J
+				{
+					if(info.dir2 == 0)
+					{
+						info.score2 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow2");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+2, "black"+inT+".png", (2)*window.innerWidth/4 - 50, 300);
+        				info.dir2 = inT*90;
+					}
+					else
+						info.score2 -= 1;
+					map[74] = false;
+				}
+				else if(map[75]) //K
+				{
+					if(info.dir2 == 270)
+					{
+						info.score2 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow2");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+2, "black"+inT+".png", (2)*window.innerWidth/4 - 50, 300);
+        				info.dir2 = inT*90;
+					}
+					else
+						info.score2 -= 1;
+					map[75] = false;
+				}
+				else if(map[76]) //L
+				{
+					if(info.dir2 == 180)
+					{
+						info.score2 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow2");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+2, "black"+inT+".png", (2)*window.innerWidth/4 - 50, 300);
+        				info.dir2 = inT*90;
+					}
+					else
+						info.score2 -= 1;
+					map[76] = false;
+				}
+
+				// Player 3 key input
+				if(map[38]) //UP
+				{
+					if(info.dir3 == 90)
+					{
+						info.score3 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow3");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+3, "black"+inT+".png", (3)*window.innerWidth/4 - 50, 300);
+        				info.dir3 = inT*90;
+					}
+					else
+						info.score3 -= 1;
+					map[38] = false;
+				}
+				else if(map[37]) //LEFT
+				{
+					if(info.dir3 == 0)
+					{
+						info.score3 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow3");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+3, "black"+inT+".png", (3)*window.innerWidth/4 - 50, 300);
+        				info.dir3 = inT*90;
+					}
+					else
+						info.score3 -= 1;
+					map[37] = false;
+				}
+				else if(map[40]) //DOWN
+				{
+					if(info.dir3 == 270)
+					{
+						info.score3 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow3");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+3, "black"+inT+".png", (3)*window.innerWidth/4 - 50, 300);
+        				info.dir3 = inT*90;
+					}
+					else
+						info.score3 -= 1;
+					map[40] = false;
+				}
+				else if(map[39]) //RIGHT
+				{
+					if(info.dir3 == 180)
+					{
+						info.score3 += 1;
+						var inT = Math.floor(Math.random()*4);
+						var arrow = document.getElementById("arrow3");
+        				arrow.parentNode.removeChild(arrow);
+        				newImage("arrow"+3, "black"+inT+".png", (3)*window.innerWidth/4 - 50, 300);
+        				info.dir3 = inT*90;
+					}
+					else
+						info.score3 -= 1;
+					map[39] = false;
+				}
+			}
+
+			setInterval("tick()", 10);
+
+			function toDegrees (angle) {
+  				return angle * (180 / Math.PI);
+			}
+			function toRadians (angle) {
+  				return angle * (Math.PI / 180);
+			}
+
+
+		</script>
+	
+</body></html>
